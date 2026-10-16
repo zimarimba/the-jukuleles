@@ -301,3 +301,29 @@ a { color: inherit; text-decoration: none; }
 }
 .menu-open .bar { background: transparent; color: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .menu-open .bar .bar__logo img { filter: invert(1); }
+
+/* ---------- SEO additions: hero kicker, FAQ ---------- */
+.hero__kicker {
+  display: block; margin-bottom: clamp(10px, 1.4vw, 18px);
+  font-size: 12px; font-weight: 500; letter-spacing: .04em; line-height: 1.2; text-transform: uppercase;
+  opacity: 0; animation: fadeIn .8s var(--ease) .9s forwards;
+}
+@keyframes fadeIn { to { opacity: .85; } }
+
+.faq { padding: 0 var(--pad) clamp(80px, 12vw, 180px); }
+.faq__list { border-top: 1.5px solid var(--rule); }
+.faq details { border-bottom: 1px solid var(--rule-soft); }
+.faq summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: baseline; gap: 24px;
+  padding: 18px 0 16px; font-weight: 700; font-size: clamp(20px, 2.4vw, 36px); line-height: 1.1; letter-spacing: -.035em;
+  transition: color .2s;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-weight: 400; color: var(--red); flex: none; transition: transform .3s var(--ease); }
+.faq details[open] summary::after { transform: rotate(45deg); }
+@media (hover: hover) { .faq summary:hover { color: var(--red); } }
+.faq details p { margin: 0 0 22px; max-width: 62ch; font-size: 17px; color: #3a3a37; }
+.faq details a { text-decoration: underline; text-underline-offset: 3px; }
+
+.contact__lede { margin: 18px 0 0; font-size: 12px; font-weight: 500; text-transform: uppercase; color: var(--grey); }
+@media (prefers-reduced-motion: reduce) { .hero__kicker { opacity: .85; } }
