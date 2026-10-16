@@ -9,6 +9,25 @@
   tick();
   setInterval(tick, 15000);
 
+  // Top bar: transparent over the hero, then matches the section underneath
+  const bar = document.getElementById('bar');
+  const hero = document.querySelector('.hero');
+  const darkSections = document.querySelectorAll('.hero, .events, .strip, .watch, .contact');
+  const updateBar = () => {
+    const y = bar.offsetHeight / 2;
+    const overHero = hero.getBoundingClientRect().bottom > y && window.scrollY < 40;
+    let dark = false;
+    darkSections.forEach((sec) => {
+      const r = sec.getBoundingClientRect();
+      if (r.top <= y && r.bottom >= y) dark = true;
+    });
+    bar.classList.toggle('is-dark', !overHero && dark);
+    bar.classList.toggle('is-light', !overHero && !dark);
+  };
+  window.addEventListener('scroll', updateBar, { passive: true });
+  window.addEventListener('resize', updateBar);
+  updateBar();
+
   // Mobile menu
   const toggle = document.querySelector('.bar__toggle');
   const menu = document.getElementById('menu');

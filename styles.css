@@ -35,9 +35,14 @@ a { color: inherit; text-decoration: none; }
   position: fixed; inset: 0 0 auto; z-index: 60;
   display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 28px;
   padding: 14px var(--pad);
-  color: #fff; mix-blend-mode: difference;
+  color: #fff; background: transparent;
+  transition: background .35s, color .35s, padding .35s;
 }
-.bar__logo img { height: 34px; width: auto; filter: invert(1); }
+.bar__logo img { height: 34px; width: auto; filter: invert(1); transition: filter .35s; }
+.bar.is-light { background: rgba(247, 247, 245, .94); color: var(--black); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); padding-block: 10px; }
+.bar.is-light .bar__logo img { filter: none; }
+.bar.is-light .bar__cta:hover { background: var(--black); color: var(--white); }
+.bar.is-dark { background: rgba(11, 11, 11, .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); padding-block: 10px; }
 .bar__nav { display: flex; gap: 22px; font-size: 13px; font-weight: 500; }
 .bar__nav sup, .menu sup { font-size: .62em; margin-right: 3px; vertical-align: super; opacity: .7; }
 .bar__nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
@@ -124,7 +129,7 @@ a { color: inherit; text-decoration: none; }
 .roster__name { font-weight: 700; text-transform: uppercase; font-size: clamp(56px, 10vw, 180px); line-height: .9; letter-spacing: -.06em; }
 .roster__role { font-size: 15px; font-weight: 500; text-align: right; }
 .roster__thumb { display: none; }
-.roster li:hover .roster__name { color: var(--red); }
+@media (hover: hover) { .roster li:hover .roster__name { color: var(--red); } }
 
 .cursor-img {
   position: fixed; left: 0; top: 0; z-index: 40; width: 260px; aspect-ratio: 3 / 4; pointer-events: none;
@@ -178,7 +183,7 @@ a { color: inherit; text-decoration: none; }
 .strip__track::-webkit-scrollbar { display: none; }
 .strip__track.drag { cursor: grabbing; scroll-snap-type: none; }
 .strip__track img {
-  height: clamp(280px, 52vh, 560px); width: auto; flex: none; scroll-snap-align: start;
+  height: clamp(280px, 52vh, 560px); width: auto; max-width: none; flex: none; scroll-snap-align: start; object-fit: cover;
   filter: grayscale(1) contrast(1.1); transition: filter .5s; user-select: none; -webkit-user-drag: none;
 }
 .strip__track img:hover { filter: none; }
@@ -259,19 +264,23 @@ a { color: inherit; text-decoration: none; }
   .bar { grid-template-columns: 1fr auto; }
   .bar__toggle { display: block; }
   .hero__grid { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
-  .hero__cell figcaption { top: auto; bottom: 10px; }
-  .hero__cell:nth-child(n+3) figcaption { display: none; }
+  .hero__cell figcaption { top: auto; bottom: 10px; left: 10px; right: 10px; flex-direction: column; gap: 2px; font-size: 11px; }
+  .hero__cell figcaption span { text-align: left; }
+  .hero__cell:nth-child(n+3) figcaption { top: 10px; bottom: auto; }
   .meta { grid-template-columns: 1fr 1fr; }
   .meta p:nth-child(3) { border-left: 0; }
   .meta p:nth-child(n+3) { border-top: 1px solid var(--rule-soft); }
   .head, .about, .feature, .contact__grid { grid-template-columns: 1fr; }
   .about__cols { grid-template-columns: 1fr; }
   .wide img { aspect-ratio: 4 / 3; }
-  .roster li { grid-template-columns: auto 1fr; grid-template-areas: "no thumb" "name name" "role role"; padding: 14px 0; align-items: end; }
-  .roster__no { grid-area: no; }
+  .roster li { grid-template-columns: 1fr auto; grid-template-areas: "thumb thumb" "name no" "role role"; padding: 0 0 18px; gap: 0 12px; align-items: end; }
+  .roster__no { grid-area: no; padding-bottom: 6px; }
   .roster__name { grid-area: name; }
   .roster__role { grid-area: role; text-align: left; }
-  .roster__thumb { display: block; grid-area: thumb; justify-self: end; width: 84px; aspect-ratio: 3 / 4; object-fit: cover; filter: grayscale(1); }
+  .roster__thumb { display: block; grid-area: thumb; width: 100%; max-width: none; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 25%; filter: grayscale(1) contrast(1.1); margin: 18px 0 14px; }
+  .roster__name { font-size: clamp(56px, 18vw, 96px); }
+  .roster__role { margin-top: 6px; }
+  .strip__track img { height: 70vw; }
   .services { gap: 40px; }
   .watch { height: 80svh; }
   .logos { grid-template-columns: repeat(2, 1fr); }
@@ -290,3 +299,5 @@ a { color: inherit; text-decoration: none; }
   .reveal { opacity: 1; transform: none; }
   .hero__title .w > span, .hero__cell img { transform: none; }
 }
+.menu-open .bar { background: transparent; color: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.menu-open .bar .bar__logo img { filter: invert(1); }
